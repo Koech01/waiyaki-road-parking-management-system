@@ -1,0 +1,175 @@
+{% load static %}
+<head>
+    <!-- Required meta tags -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <!-- jQuery -->
+    <script src="https://code.jquery.com/jquery-3.3.1.min.js"></script>
+    <!--Custom css-->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Raleway:wght@600;700&display=swap" rel="stylesheet">
+    <!-- semantic UI -->
+    <link rel="stylesheet" type='text/css' href=" https://cdnjs.cloudflare.com/ajax/libs/semantic-ui/2.4.1/semantic.min.css">
+    <script src=" https://cdnjs.cloudflare.com/ajax/libs/semantic-ui/2.4.1/semantic.min.js"></script>
+    <title>{% block title %}Waiyaki Rd Parking - Sign Up{% endblock title %}</title>
+    {% load widget_tweaks %} 
+</head>
+<style>
+    .parentDiv {
+        position: relative;
+        height: 100%;
+        width: 100%;
+        overflow: hidden;
+        background-color: #e8e8e8;
+        font-family: 'Raleway', sans-serif;
+    }
+
+    .childCard{
+        position: absolute;
+        top: 18%;
+        left: 35%;
+        width: 400px;
+        height: 400px;
+        border-radius: 4px;
+        background: #ffffff;
+        padding: 30px 0px 0px 70px;
+        box-shadow: 20px 20px 60px #bebebe,-20px -20px 60px #ffffff;
+    }
+
+    .cardTitle {
+        font-size: 22px;
+        font-weight: 600;
+        color: #000000;
+        margin: 0px 0px 20px 40px;
+    }
+
+    .userInputDiv input{ 
+        outline: none;
+        width: 250px;
+        height: 35px;
+        color: #000000;
+        font-size: 13.5px;
+        border-radius: 4px;
+        padding:2px 10px 2px;
+        margin: 0px 0px 20px 0px;
+        transition: .5s linear;
+        border: 2px solid #BDBDBD;
+        background-color: #F5F5F5;
+    }
+
+    .userInputDiv input:focus {
+        color: #000000;
+        font-size: 13.5px;
+        caret-color: #4DB6AC;
+        border: 2px solid #4DB6AC;
+        background-color: #ffffff;
+        box-shadow: 4px 4px 10px #ffffff;
+    }
+
+    .userInputDiv input:focus::placeholder { color: #000000; }
+
+    .loginBtn{
+        display: flex;
+        border: 0;
+        gap: 0.6em;
+        width: 250px;
+        height: 35px;
+        border-radius: 5px;
+        margin: 5px 0px 20px 0px;
+        padding: 0px 0px 0px 100px;
+        cursor: pointer;
+        font-weight: bold;
+        align-items: center;
+        box-sizing: border-box;
+        --primary-color: #26A69A;
+        --secondary-color: #fff;
+        --hover-color: #111;
+        --arrow-width: 10px;
+        --arrow-stroke: 2px;
+        transition: 0.2s background;
+        background: var(--primary-color);
+        color: var(--secondary-color);
+    }
+
+    .loginBtn arrow-wrapper {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+    }
+
+    .loginBtn .arrow {
+    margin-top: 1px;
+    width: var(--arrow-width);
+    background: var(--primary-color);
+    height: var(--arrow-stroke);
+    position: relative;
+    transition: 0.2s;
+    }
+
+    .loginBtn .arrow::before {
+        top: -3px;
+        right: 3px;
+        content: "";
+        padding: 3px;
+        transition: 0.2s;
+        box-sizing: border-box;
+        position: absolute;
+        border: solid var(--secondary-color);
+        border-width: 0 var(--arrow-stroke) var(--arrow-stroke) 0;
+        display: inline-block;
+        transform: rotate(-45deg);
+    }
+
+    .loginBtn:hover { background-color: var(--hover-color); }
+    .loginBtn:hover .arrow { background: var(--secondary-color); }
+    .loginBtn:hover .arrow:before { right: 0; }
+
+    .link{
+        color: #000000 !important;
+        font-size: 16px;
+        margin: 0px 0px 0px 30px;
+    }
+
+    .link:hover {
+        color: #000000 !important;
+        text-decoration: underline;
+    }
+</style>
+{% block content %}
+<div class="parentDiv">
+    <div class="childCard">
+        <form action="" method="post">
+            {% csrf_token %}
+            <h4 class="cardTitle">Create Account</h4>
+
+            <div class="userInputDiv" data-text="Email">  
+                {% render_field form.email placeholder=form.email.label class+="form-control" %}
+            </div>
+
+            <div class="userInputDiv" data-text="Username">
+                {% render_field form.username placeholder=form.username.label class+="form-control"  %}
+            </div>
+
+            <div class="userInputDiv" data-text="Password">
+                {% render_field form.password1 placeholder=form.password1.label class+="form-control"  %}
+                <span class="border"></span>
+            </div>
+
+            <div class="userInputDiv" data-text="Password">
+                {% render_field form.password2 placeholder=form.password2.label class+="form-control"  %}
+                <span class="border"></span>
+            </div>
+
+            <button class="loginBtn" type="submit">
+                Sign Up<div class="arrow-wrapper"><div class="arrow"></div></div>
+            </button>
+        </form>
+        <a class="link" href="{% url 'login' %}">Already Have an Account</a>
+    </div>
+</div>
+{% endblock content %}
+{% block scripts %}
+<script type="text/javascript">
+</script>
+{% endblock scripts %}

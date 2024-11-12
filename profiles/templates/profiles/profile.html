@@ -1,0 +1,43 @@
+<head>
+    {% extends 'base.html' %}
+    {% load static %}
+    {% block title %}Waiyaki Rd Parking | {{profile}}{% endblock title %}   
+</head>
+{% block content %}
+{% include 'home/navigationBar.html' %}
+
+<div id="profileParentDiv">
+  
+    <div id="profileHeaderDiv">
+      <div class="image">
+        <div class="image"><img id="profileIconCard" src={{profile.profilePicture.url}}></div>
+      </div>
+
+      <div class="ui cards" id="profileDetailCard">
+        <div class="card">
+          <div class="content">
+            <div class="header">{{profile.user}}</div>
+            <div class="meta">{{profile.email}}</div>
+            <div class="description">{{profile.firstName}} {{profile.lastName}}</div>
+          </div>
+        </div>
+      </div>
+
+      <button class="ui labeled icon button" id="profileEditBtn" onclick="profileEdit()"><i class="user icon"></i>Update</button>
+    </div>
+
+
+    <div id="profileParkingLogsDiv">
+      <div class="ui info message">
+        <div class="header">No tickets reserved yet.</div>
+        <div class="list"><div>Tickets generated from parking reservation appear here.</div></div>
+      </div>
+    </div>
+</div>
+{% endblock content %}
+{% block scripts %}
+<script type="text/javascript">
+    function profileEdit(){ window.location.href = "{% url 'profiles:editProfile' %}"; }
+</script>
+{% endblock scripts %}
+

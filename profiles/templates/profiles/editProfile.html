@@ -1,0 +1,40 @@
+<head>
+    {% extends 'base.html' %}
+    {% load static %}
+    {% block title %}Waiyaki Rd Parking | edit {{profile}}{% endblock title %}   
+</head>
+{% block content %}
+{% include 'home/navigationBar.html' %}
+<div id="profileEditParent">
+
+  <div class="ui segment">
+    <form class="ui form" id="profileEditForm" action="" method="POST" enctype="multipart/form-data">
+      {% csrf_token %}
+
+      <div class="ui items">
+        <div class="item">
+          <a class="ui tiny image"><img id="profileEditProfileIcon" src={{profile.profilePicture.url}}></a>
+          <div class="middle aligned content"><div class="header">{{profile.user}}</div></div>
+          <div class="field" id="profileEditProfileIconBtn">{{form.profilePicture}}</div>
+        </div>
+      </div>
+
+      <div class="field"><label>First Name</label>{{form.firstName}}</div>
+
+      <div class="field"><label>Last Name</label>{{form.lastName}}</div>
+
+      <div class="field"><label>Email</label>{{form.email}}</div>
+
+      <button class="ui button" type="submit" id="profileEditSubmitBtn">Submit</button>
+    </form>
+  </div>
+
+
+</div>
+{% endblock content %}
+{% block scripts %}
+<script type="text/javascript">
+
+</script>
+{% endblock scripts %}
+

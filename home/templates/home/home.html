@@ -1,0 +1,186 @@
+<head>
+  {% extends 'base.html' %}
+  {% load static %}
+  {% block title %}Waiyaki Rd Parking{% endblock title %}
+  {% load widget_tweaks %} 
+</head>
+{% block content %}
+{% include 'home/navigationBar.html' %}
+<div id="homeMainDiv">
+
+  <div class="ui segment" id="homeFlexDiv">
+    {% comment %} <div class="ui icon message" id="homeFlexPlaceholder">
+      <i class="inbox icon"></i>
+      <div class="content">
+        <div class="header">No car number plates added.</div>
+        <p>Number plates of cars linked to your profile appear here.</p>
+      </div>
+    </div> {% endcomment %}
+
+    <div class="ui four statistics">
+      <div class="statistic">
+        <div class="value"><i class="car icon"></i> 5</div>
+        <div class="label">Cars</div>
+      </div>
+    </div>
+    
+    <div id="homeNoPlateList">
+      <a class="ui basic label" id="homeNoPlateItem">BD23 LFP</a>
+      <a class="ui basic label" id="homeNoPlateItem">MG72 KXN</a>
+      <a class="ui basic label" id="homeNoPlateItem">HK19 XZT</a>
+      <a class="ui basic label" id="homeNoPlateItem">YN68 GVO</a>
+      <a class="ui basic label" id="homeNoPlateItem">PL21 RJE</a>
+    </div>
+  </div>
+
+  <div id="homeParkingGrid">
+
+
+    <table class="ui teal table" id="homeParkingTable">
+      <thead>
+        <tr>
+          <th>Column</th>
+          <th>Column</th>
+          <th>Column</th>
+          <th>Column</th>
+          <th>Column</th>
+          <th>Column</th>
+          <th>Column</th>
+          <th>Column</th>
+          <th>Column</th>
+          <th>Column</th>
+        </tr>
+      </thead>
+    
+      <tbody>
+        <tr>
+          <td><a class="ui green basic label">Available</a></td>
+          <td><a class="ui green basic label">Available</a></td>
+          <td><a class="ui red basic label">Reserved</a></td>
+          <td><a class="ui yellow basic label">Almost Available</a></td>
+          <td><a class="ui red basic label">Reserved</a></td>
+          <td><a class="ui red basic label">Reserved</a></td>
+          <td><a class="ui yellow basic label">Almost Available</a></td>
+          <td><a class="ui red basic label">Reserved</a></td>
+          <td><a class="ui green basic label">Available</a></td>
+          <td><a class="ui red basic label">Reserved</a></td>
+        </tr>
+
+        <tr>
+          <td><a class="ui green basic label">Available</a></td>
+          <td><a class="ui green basic label">Available</a></td>
+          <td><a class="ui red basic label">Reserved</a></td>
+          <td><a class="ui yellow basic label">Almost Available</a></td>
+          <td><a class="ui red basic label">Reserved</a></td>
+          <td><a class="ui red basic label">Reserved</a></td>
+          <td><a class="ui yellow basic label">Almost Available</a></td>
+          <td><a class="ui red basic label">Reserved</a></td>
+          <td><a class="ui green basic label">Available</a></td>
+          <td><a class="ui red basic label">Reserved</a></td>
+        </tr>
+
+        <tr>
+          <td><a class="ui green basic label">Available</a></td>
+          <td><a class="ui green basic label">Available</a></td>
+          <td><a class="ui red basic label">Reserved</a></td>
+          <td><a class="ui yellow basic label">Almost Available</a></td>
+          <td><a class="ui red basic label">Reserved</a></td>
+          <td><a class="ui red basic label">Reserved</a></td>
+          <td><a class="ui yellow basic label">Almost Available</a></td>
+          <td><a class="ui red basic label">Reserved</a></td>
+          <td><a class="ui green basic label">Available</a></td>
+          <td><a class="ui red basic label">Reserved</a></td>
+        </tr>
+
+        <tr>
+          <td><a class="ui green basic label">Available</a></td>
+          <td><a class="ui green basic label">Available</a></td>
+          <td><a class="ui red basic label">Reserved</a></td>
+          <td><a class="ui yellow basic label">Almost Available</a></td>
+          <td><a class="ui red basic label">Reserved</a></td>
+          <td><a class="ui red basic label">Reserved</a></td>
+          <td><a class="ui yellow basic label">Almost Available</a></td>
+          <td><a class="ui red basic label">Reserved</a></td>
+          <td><a class="ui green basic label">Available</a></td>
+          <td><a class="ui red basic label">Reserved</a></td>
+        </tr>
+
+        <tr>
+          <td><a class="ui green basic label">Available</a></td>
+          <td><a class="ui green basic label">Available</a></td>
+          <td><a class="ui red basic label">Reserved</a></td>
+          <td><a class="ui yellow basic label">Almost Available</a></td>
+          <td><a class="ui red basic label">Reserved</a></td>
+          <td><a class="ui red basic label">Reserved</a></td>
+          <td><a class="ui yellow basic label">Almost Available</a></td>
+          <td><a class="ui red basic label">Reserved</a></td>
+          <td><a class="ui green basic label">Available</a></td>
+          <td><a class="ui red basic label">Reserved</a></td>
+        </tr>
+
+        <tr>
+          <td><a class="ui green basic label">Available</a></td>
+          <td><a class="ui green basic label">Available</a></td>
+          <td><a class="ui red basic label">Reserved</a></td>
+          <td><a class="ui yellow basic label">Almost Available</a></td>
+          <td><a class="ui red basic label">Reserved</a></td>
+          <td><a class="ui red basic label">Reserved</a></td>
+          <td><a class="ui yellow basic label">Almost Available</a></td>
+          <td><a class="ui red basic label">Reserved</a></td>
+          <td><a class="ui green basic label">Available</a></td>
+          <td><a class="ui red basic label">Reserved</a></td>
+        </tr>
+
+        <tr>
+          <td><a class="ui green basic label">Available</a></td>
+          <td><a class="ui green basic label">Available</a></td>
+          <td><a class="ui red basic label">Reserved</a></td>
+          <td><a class="ui yellow basic label">Almost Available</a></td>
+          <td><a class="ui red basic label">Reserved</a></td>
+          <td><a class="ui red basic label">Reserved</a></td>
+          <td><a class="ui yellow basic label">Almost Available</a></td>
+          <td><a class="ui red basic label">Reserved</a></td>
+          <td><a class="ui green basic label">Available</a></td>
+          <td><a class="ui red basic label">Reserved</a></td>
+        </tr>
+
+        <tr>
+          <td><a class="ui green basic label">Available</a></td>
+          <td><a class="ui green basic label">Available</a></td>
+          <td><a class="ui red basic label">Reserved</a></td>
+          <td><a class="ui yellow basic label">Almost Available</a></td>
+          <td><a class="ui red basic label">Reserved</a></td>
+          <td><a class="ui red basic label">Reserved</a></td>
+          <td><a class="ui yellow basic label">Almost Available</a></td>
+          <td><a class="ui red basic label">Reserved</a></td>
+          <td><a class="ui green basic label">Available</a></td>
+          <td><a class="ui red basic label">Reserved</a></td>
+        </tr>
+
+        <tr>
+          <td><a class="ui green basic label">Available</a></td>
+          <td><a class="ui green basic label">Available</a></td>
+          <td><a class="ui red basic label">Reserved</a></td>
+          <td><a class="ui yellow basic label">Almost Available</a></td>
+          <td><a class="ui red basic label">Reserved</a></td>
+          <td><a class="ui red basic label">Reserved</a></td>
+          <td><a class="ui yellow basic label">Almost Available</a></td>
+          <td><a class="ui red basic label">Reserved</a></td>
+          <td><a class="ui green basic label">Available</a></td>
+          <td><a class="ui red basic label">Reserved</a></td>
+        </tr>
+      </tbody>
+    </table>
+
+  </div>
+</div>
+{% endblock content %}
+{% block scripts %}
+<script type="text/javascript">
+ 
+</script>
+{% endblock scripts %}
+
+
+
+

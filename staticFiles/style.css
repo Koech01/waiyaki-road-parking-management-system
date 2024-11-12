@@ -1,0 +1,155 @@
+#navbarMainDiv{
+    width: 100%;
+    margin: 0px;
+    padding: 5px;
+    border-bottom: 1px solid #ECEFF1 !important;
+}
+
+#homeMainDiv{
+    display: flex;
+    flex: 1;
+    width: 100%;
+    margin: 0px;
+    padding: 0px;
+    overflow: hidden;
+    align-items: center;
+    flex-direction: column;
+    justify-content: center;
+}
+
+#homeFlexDiv{
+    display: flex;
+    flex: 1;
+    gap: 10px;
+    width: 95%;
+    margin: 10px;
+    padding: 10px;
+}
+
+#homeFlexPlaceholder{
+    margin: 0px;
+    width: fit-content;
+}
+
+#homeNoPlateList{
+    display: flex;
+    gap: 10px;
+    margin: 0px;
+    padding: 10px;
+    align-items: center;
+    justify-content: center;
+}
+
+#homeNoPlateItem{
+    margin: 0px;
+    height: fit-content;
+}
+
+#homeParkingGrid{
+    display: flex;
+    width: 98%;
+    height: 80%;
+    margin: 10px;
+    padding: 5px;
+    overflow-y: auto;
+}
+
+#homeParkingTable{
+    margin: 0px;
+    padding: 0px;
+}
+
+
+/* Profile Page */
+
+#profileParentDiv{
+    display: flex;
+    flex: 1;
+    width: 100%;
+    margin: 0px;
+    padding: 0px;
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;
+    border: 1px solid mediumseagreen !important;
+}
+
+#profileHeaderDiv{
+    display: flex;
+    width: 45vw;
+    height: 25vh;
+    margin: 10px;
+    padding: 10px;
+    align-self: center;
+    justify-content: flex-start;
+}
+
+#profileParkingLogsDiv{
+    display: flex;
+    flex: 1;
+    width: 98%;
+    padding: 10px;
+    flex-direction: column;
+    align-items: flex-start;
+    margin: 0px 0px 10px 0px;
+    justify-content: flex-start;
+    border: 1px solid mediumseagreen !important;
+}
+
+#profileIconCard{
+    display: flex;
+    margin: 0px;
+    padding: 0px;
+    width: 130px;
+    height: 130px;
+    object-fit: cover;
+    border-radius: 4px;
+}
+
+#profileDetailCard{
+    display: flex;
+    padding: 0px;
+    height: fit-content;
+    margin: 0px 10px 0px 10px;
+}
+
+#profileEditBtn{
+    height: fit-content;
+    margin: 50px 0px 0px 0px;
+}
+
+#profileEditParent{
+    display: flex;
+    flex: 1;
+    width: 100%;
+    margin: 0px;
+    padding: 0px;
+    align-items: center;
+    flex-direction: column;
+    justify-content: center;
+}
+
+#profileEditForm{
+    display: flex;
+    width: 100%;
+    margin: 0px;
+    padding: 0px;
+    flex-direction: column;
+}
+
+#profileEditProfileIcon{
+    display: flex;
+    width: 100px;
+    height: 80px;
+    margin: 0px;
+    padding: 0px;
+    object-fit: cover;
+    border-radius: 50%;
+}
+
+#profileEditProfileIconBtn{
+    width: 50%;
+    margin: 18px 0px 0px 0px;
+}
+
+#profileEditSubmitBtn{  width: fit-content; }

@@ -1,0 +1,134 @@
+{% load static %}
+<head>
+    <!-- Required meta tags -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <!-- jQuery -->
+    <script src="https://code.jquery.com/jquery-3.3.1.min.js"></script>
+    <!--Custom css-->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Raleway:wght@600;700&display=swap" rel="stylesheet">
+    <!-- semantic UI -->
+    <link rel="stylesheet" type='text/css' href=" https://cdnjs.cloudflare.com/ajax/libs/semantic-ui/2.4.1/semantic.min.css">
+    <script src=" https://cdnjs.cloudflare.com/ajax/libs/semantic-ui/2.4.1/semantic.min.js"></script>
+    <title>{% block title %}Waiyaki Rd Parking - Sign Up{% endblock title %}</title>
+    {% load widget_tweaks %} 
+</head>
+<style>
+
+    .parentDiv {
+        display: flex;
+        margin: 0px;
+        padding : 0px;
+        overflow: none;
+        align-items: center;
+        width: 100% !important;
+        height: 100% !important;
+        justify-content: center;
+    }
+
+    #parentChildDiv{
+        display: flex;
+        width: 100%;
+        margin: 0px;
+        height: 100%;
+        padding : 0px;
+        overflow: none;
+        align-items: center !important;
+        justify-content: center !important;
+    }
+
+    #parentChildDiv div { width: 45%; }
+
+    #loginLinkDiv { 
+        display: flex;
+        gap: 20px;
+        margin: 0px;
+        padding : 0px;
+        width: 100% !important;
+        align-items: center !important;
+    }
+
+    #loginLeftLinkDiv{ 
+        display: flex;
+        gap: 10px;
+        width: 100%;
+        margin: 0px;
+        padding : 0px;
+        align-items: center !important;
+        justify-content: flex-end !important;
+    }
+
+    #loginRightLinkDiv{ 
+        display: flex;
+        gap: 10px;
+        width: 100%;
+        margin: 0px;
+        padding : 0px;
+        align-items: center !important;
+        justify-content: flex-start !important;
+    }
+
+    #loginForm, #loginForm div, #loginBtn { width: 100% !important; }
+
+</style>
+{% block content %}
+<div class="parentDiv">
+
+    <div class="ui middle aligned center aligned grid" id="parentChildDiv">
+        <div class="ui segment">
+            <h3 class="ui header">Create Account</h3>
+
+            <form action="" method="post" class="ui form" id="loginForm">
+                {% csrf_token %}
+                <div>
+                    <div class="field">
+                    <div class="ui left icon input">
+                        <i class="at icon"></i>
+                        {% render_field form.email placeholder=form.email.label class+="form-control" %}
+                    </div>
+                    </div>
+
+
+                    <div class="field">
+                    <div class="ui left icon input">
+                        <i class="user icon"></i>
+                        {% render_field form.username placeholder=form.username.label class+="form-control"  %}
+                    </div>
+                    </div>
+
+
+                    <div class="field">
+                        <div class="ui left icon input">
+                            <i class="lock icon"></i>
+                            {% render_field form.password1 placeholder=form.password1.label class+="form-control"  %}
+                        </div>
+                    </div>
+
+                    <div class="field">
+                        <div class="ui left icon input">
+                            <i class="lock icon"></i>
+                            {% render_field form.password2 placeholder=form.password2.label class+="form-control"  %}
+                        </div>
+                    </div>
+
+                    <button class="ui secondary button" type="submit" id="loginBtn">Sign Up</button>
+
+                </div>
+            
+            </form>
+        
+            <div id="loginLinkDiv">
+                <div id="loginLeftLinkDiv">New to us? <a href="{% url 'login' %}">Already Have an Account</a></div>
+            </div>
+
+        </div>
+    </div>
+
+</div>
+{% endblock content %}
+{% block scripts %}
+<script type="text/javascript">
+</script>
+{% endblock scripts %}
