@@ -9,27 +9,41 @@
 <div id="homeMainDiv">
 
   <div class="ui segment" id="homeFlexDiv">
-    {% comment %} <div class="ui icon message" id="homeFlexPlaceholder">
-      <i class="inbox icon"></i>
-      <div class="content">
-        <div class="header">No car number plates added.</div>
-        <p>Number plates of cars linked to your profile appear here.</p>
-      </div>
-    </div> {% endcomment %}
 
-    <div class="ui four statistics">
-      <div class="statistic">
-        <div class="value"><i class="car icon"></i> 5</div>
-        <div class="label">Cars</div>
+    {% if profile.carPlates %}
+      <div class="ui four statistics">
+        <div class="statistic">
+          <div class="value"><i class="car icon"></i> 5</div>
+          <div class="label">Cars</div>
+        </div>
       </div>
-    </div>
+
+      {% for plate in profile.carPlates %}
+        <a class="ui basic label" id="homeNoPlateItem">{{ plate }}</a>
+      {% endfor %}
+    {% else %}
+      {% if not request.user.is_superuser %}
+        <div class="ui icon message">
+          <i class="inbox icon"></i>
+          <div class="content">
+            <div class="header">No car number plates added.</div>
+            <p>Number plates of cars linked to your profile appear here.</p>
+          </div>
+        </div>
+      {% endif %}
+    {% endif %}
+
     
     <div id="homeNoPlateList">
-      <a class="ui basic label" id="homeNoPlateItem">BD23 LFP</a>
-      <a class="ui basic label" id="homeNoPlateItem">MG72 KXN</a>
-      <a class="ui basic label" id="homeNoPlateItem">HK19 XZT</a>
-      <a class="ui basic label" id="homeNoPlateItem">YN68 GVO</a>
-      <a class="ui basic label" id="homeNoPlateItem">PL21 RJE</a>
+      {% if profile.user.is_superuser %}
+        <button class="ui button" onclick="createParkingGrid()">Add Parking Space ( Cell )</button>
+      {% else %}
+        <a class="ui basic label" id="homeNoPlateItem">BD23 LFP</a>
+        <a class="ui basic label" id="homeNoPlateItem">MG72 KXN</a>
+        <a class="ui basic label" id="homeNoPlateItem">HK19 XZT</a>
+        <a class="ui basic label" id="homeNoPlateItem">YN68 GVO</a>
+        <a class="ui basic label" id="homeNoPlateItem">PL21 RJE</a>
+      {% endif %}
     </div>
   </div>
 
@@ -39,136 +53,33 @@
     <table class="ui teal table" id="homeParkingTable">
       <thead>
         <tr>
-          <th>Column</th>
-          <th>Column</th>
-          <th>Column</th>
-          <th>Column</th>
-          <th>Column</th>
-          <th>Column</th>
-          <th>Column</th>
-          <th>Column</th>
-          <th>Column</th>
-          <th>Column</th>
+          <th>Column 1</th>
+          <th>Column 2</th>
+          <th>Column 3</th>
+          <th>Column 4</th>
+          <th>Column 5</th>
+          <th>Column 6</th>
+          <th>Column 7</th>
+          <th>Column 8</th>
+          <th>Column 9</th>
+          <th>Column 10</th>
         </tr>
       </thead>
     
       <tbody>
-        <tr>
-          <td><a class="ui green basic label">Available</a></td>
-          <td><a class="ui green basic label">Available</a></td>
-          <td><a class="ui red basic label">Reserved</a></td>
-          <td><a class="ui yellow basic label">Almost Available</a></td>
-          <td><a class="ui red basic label">Reserved</a></td>
-          <td><a class="ui red basic label">Reserved</a></td>
-          <td><a class="ui yellow basic label">Almost Available</a></td>
-          <td><a class="ui red basic label">Reserved</a></td>
-          <td><a class="ui green basic label">Available</a></td>
-          <td><a class="ui red basic label">Reserved</a></td>
-        </tr>
-
-        <tr>
-          <td><a class="ui green basic label">Available</a></td>
-          <td><a class="ui green basic label">Available</a></td>
-          <td><a class="ui red basic label">Reserved</a></td>
-          <td><a class="ui yellow basic label">Almost Available</a></td>
-          <td><a class="ui red basic label">Reserved</a></td>
-          <td><a class="ui red basic label">Reserved</a></td>
-          <td><a class="ui yellow basic label">Almost Available</a></td>
-          <td><a class="ui red basic label">Reserved</a></td>
-          <td><a class="ui green basic label">Available</a></td>
-          <td><a class="ui red basic label">Reserved</a></td>
-        </tr>
-
-        <tr>
-          <td><a class="ui green basic label">Available</a></td>
-          <td><a class="ui green basic label">Available</a></td>
-          <td><a class="ui red basic label">Reserved</a></td>
-          <td><a class="ui yellow basic label">Almost Available</a></td>
-          <td><a class="ui red basic label">Reserved</a></td>
-          <td><a class="ui red basic label">Reserved</a></td>
-          <td><a class="ui yellow basic label">Almost Available</a></td>
-          <td><a class="ui red basic label">Reserved</a></td>
-          <td><a class="ui green basic label">Available</a></td>
-          <td><a class="ui red basic label">Reserved</a></td>
-        </tr>
-
-        <tr>
-          <td><a class="ui green basic label">Available</a></td>
-          <td><a class="ui green basic label">Available</a></td>
-          <td><a class="ui red basic label">Reserved</a></td>
-          <td><a class="ui yellow basic label">Almost Available</a></td>
-          <td><a class="ui red basic label">Reserved</a></td>
-          <td><a class="ui red basic label">Reserved</a></td>
-          <td><a class="ui yellow basic label">Almost Available</a></td>
-          <td><a class="ui red basic label">Reserved</a></td>
-          <td><a class="ui green basic label">Available</a></td>
-          <td><a class="ui red basic label">Reserved</a></td>
-        </tr>
-
-        <tr>
-          <td><a class="ui green basic label">Available</a></td>
-          <td><a class="ui green basic label">Available</a></td>
-          <td><a class="ui red basic label">Reserved</a></td>
-          <td><a class="ui yellow basic label">Almost Available</a></td>
-          <td><a class="ui red basic label">Reserved</a></td>
-          <td><a class="ui red basic label">Reserved</a></td>
-          <td><a class="ui yellow basic label">Almost Available</a></td>
-          <td><a class="ui red basic label">Reserved</a></td>
-          <td><a class="ui green basic label">Available</a></td>
-          <td><a class="ui red basic label">Reserved</a></td>
-        </tr>
-
-        <tr>
-          <td><a class="ui green basic label">Available</a></td>
-          <td><a class="ui green basic label">Available</a></td>
-          <td><a class="ui red basic label">Reserved</a></td>
-          <td><a class="ui yellow basic label">Almost Available</a></td>
-          <td><a class="ui red basic label">Reserved</a></td>
-          <td><a class="ui red basic label">Reserved</a></td>
-          <td><a class="ui yellow basic label">Almost Available</a></td>
-          <td><a class="ui red basic label">Reserved</a></td>
-          <td><a class="ui green basic label">Available</a></td>
-          <td><a class="ui red basic label">Reserved</a></td>
-        </tr>
-
-        <tr>
-          <td><a class="ui green basic label">Available</a></td>
-          <td><a class="ui green basic label">Available</a></td>
-          <td><a class="ui red basic label">Reserved</a></td>
-          <td><a class="ui yellow basic label">Almost Available</a></td>
-          <td><a class="ui red basic label">Reserved</a></td>
-          <td><a class="ui red basic label">Reserved</a></td>
-          <td><a class="ui yellow basic label">Almost Available</a></td>
-          <td><a class="ui red basic label">Reserved</a></td>
-          <td><a class="ui green basic label">Available</a></td>
-          <td><a class="ui red basic label">Reserved</a></td>
-        </tr>
-
-        <tr>
-          <td><a class="ui green basic label">Available</a></td>
-          <td><a class="ui green basic label">Available</a></td>
-          <td><a class="ui red basic label">Reserved</a></td>
-          <td><a class="ui yellow basic label">Almost Available</a></td>
-          <td><a class="ui red basic label">Reserved</a></td>
-          <td><a class="ui red basic label">Reserved</a></td>
-          <td><a class="ui yellow basic label">Almost Available</a></td>
-          <td><a class="ui red basic label">Reserved</a></td>
-          <td><a class="ui green basic label">Available</a></td>
-          <td><a class="ui red basic label">Reserved</a></td>
-        </tr>
-
-        <tr>
-          <td><a class="ui green basic label">Available</a></td>
-          <td><a class="ui green basic label">Available</a></td>
-          <td><a class="ui red basic label">Reserved</a></td>
-          <td><a class="ui yellow basic label">Almost Available</a></td>
-          <td><a class="ui red basic label">Reserved</a></td>
-          <td><a class="ui red basic label">Reserved</a></td>
-          <td><a class="ui yellow basic label">Almost Available</a></td>
-          <td><a class="ui red basic label">Reserved</a></td>
-          <td><a class="ui green basic label">Available</a></td>
-          <td><a class="ui red basic label">Reserved</a></td>
-        </tr>
+        {% for row, slots in parkingCells.items %}
+          <tr> 
+            {% for slot in slots %}
+              <td>
+                {% if slot.isAvailable %}
+                  <a href="#" class="ui green basic label" onclick="reserveSlot({{ slot.id }})">Available</a>
+                {% else %}
+                  <a class="ui red basic label">Reserved</a>
+                {% endif %}
+              </td>
+            {% endfor %}
+          </tr>
+        {% endfor %}
       </tbody>
     </table>
 
@@ -177,10 +88,34 @@
 {% endblock content %}
 {% block scripts %}
 <script type="text/javascript">
- 
+  function createParkingGrid() {
+    fetch('{% url "home:createParkingGrid" %}', {
+      method : 'POST',
+      headers: { 'Content-Type': 'application/json', 'X-CSRFToken': '{{ csrf_token }}',  },
+      body   : JSON.stringify({  }),
+    })
+    .then(response => {
+      if   (response.ok) { location.reload(); } 
+      else { alert('Error creating parking grid.'); }
+    });
+  }
+
+
+  function reserveSlot(slotId) {
+    fetch(`/reserveParkingGrid/${slotId}/`, {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json',   'X-CSRFToken': '{{ csrf_token }}' },
+      body: JSON.stringify({})
+    })
+    .then(response => response.json())
+    .then(data => {
+      if (data.success) {
+        alert('Reservation successful!');
+        location.reload();  // Refresh the page to show the updated availability
+      } 
+      else {  alert(data.error || 'Something went wrong.'); }
+    });
+  }
+
 </script>
 {% endblock scripts %}
-
-
-
-

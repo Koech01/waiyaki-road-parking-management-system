@@ -11,6 +11,7 @@ class Profile(models.Model):
     firstName      = models.CharField(max_length=35, blank=True)
     lastName       = models.CharField(max_length=35, blank=True)
     email          = models.EmailField(max_length=90, blank=True)
+    carPlates      = models.JSONField(default=list, blank=True)
     updated        = models.TimeField(auto_now=True)
     created        = models.TimeField(auto_now_add=True)
 
@@ -33,3 +34,11 @@ class Profile(models.Model):
             sluged = str(self.user)
         self.slug = sluged
         super().save(*args, **kwargs)
+
+
+class CarPlate(models.Model):
+    profile     = models.ForeignKey(Profile, on_delete=models.CASCADE, related_name='car_plates')
+    plateNumber = models.CharField(max_length=20, unique=True)  
+
+    def __str__(self):
+        return f"User - {self.profile.user.username} ~ Plate No. - {self.plateNumber}"

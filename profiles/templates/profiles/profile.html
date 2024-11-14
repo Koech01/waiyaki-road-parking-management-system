@@ -26,18 +26,38 @@
       <button class="ui labeled icon button" id="profileEditBtn" onclick="profileEdit()"><i class="user icon"></i>Update</button>
     </div>
 
+    <div class="ui segment" id="profileParkingLogsDiv">
 
-    <div id="profileParkingLogsDiv">
-      <div class="ui info message">
-        <div class="header">No tickets reserved yet.</div>
-        <div class="list"><div>Tickets generated from parking reservation appear here.</div></div>
+      <h2 class="ui sub header">Notifications</h2>
+
+      <div id="profileNotificationList">
+
+        {% for notification in notifications %} 
+          <div class="ui segment" id="profileNotificationItem">
+            <div class="ui comments">
+              <div class="comment">
+                <div class="content">
+                  <a class="author">HK19 XZT</a>
+                  <div class="metadata"><div class="date">{{ notification.timestamp | date:"d M H.i" }}</div></div>
+                  <div class="text">{{notification.message}}</div>
+                </div>
+              </div>
+            </div>
+          </div>
+        {% empty %}
+          <div class="ui info message">
+            <div class="header">No tickets reserved yet.</div>
+            <div class="list"><div>Tickets generated from parking reservation appear here.</div></div>
+          </div>
+        {% endfor %} 
+        
       </div>
     </div>
 </div>
 {% endblock content %}
 {% block scripts %}
 <script type="text/javascript">
-    function profileEdit(){ window.location.href = "{% url 'profiles:editProfile' %}"; }
+  function profileEdit(){ window.location.href = "{% url 'profiles:editProfile' %}"; }
 </script>
 {% endblock scripts %}
 
