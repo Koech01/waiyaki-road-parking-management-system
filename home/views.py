@@ -1,10 +1,10 @@
-from django.template import loader
-from profiles.models import Profile
-from django.http import HttpResponse
-from django.contrib.auth.decorators import login_required
-from .models import ParkingGrid, Reservation
-from django.shortcuts import render, get_object_or_404, redirect
 from django.utils import timezone
+from django.template import loader
+from django.http import HttpResponse
+from profiles.models import Profile, CarPlate
+from django.shortcuts import get_object_or_404, redirect
+from django.contrib.auth.decorators import login_required
+from .models import ParkingGrid, Reservation, ParkingColumn
 
 
 # Create your views here.
@@ -19,8 +19,19 @@ def homeView(request):
             parkingCells[slot.row] = []
         parkingCells[slot.row].append(slot)
 
+    # Get the car plates for the current profile
+    carPlates    = CarPlate.objects.filter(profile=profile)
+    totalColumns = ParkingColumn.objects.first().totalColumn
+    columnCount  = list(range(totalColumns))
+
     template    = loader.get_template('home/home.html')
-    context     = { "profile": profile , "parkingCells": parkingCells }
+    context     = { 
+        "profile"     : profile , 
+        "parkingCells": parkingCells,
+        "carPlates"   : carPlates,
+        "columnCount" : columnCount,
+        "totalColumns": totalColumns
+    }
     return HttpResponse(template.render(context, request))
 
 
@@ -30,6 +41,26 @@ def createParkingGrid(request):
     if request.method == 'POST' and profile.user.is_superuser:
         newParkingSlot = ParkingGrid()
         newParkingSlot.save()
+    return redirect('home:home')
+
+
+@login_required
+def increaseParkingColumns(request):
+    parkingColumn = ParkingColumn.objects.first()
+    profile       = Profile.objects.get(user=request.user)
+    if request.method == 'POST' and profile.user.is_superuser and parkingColumn.totalColumn < 15: 
+        parkingColumn.totalColumn += 1
+        parkingColumn.save()
+    return redirect('home:home')
+
+
+@login_required
+def decreaseParkingColumns(request):
+    parkingColumn = ParkingColumn.objects.first()
+    profile       = Profile.objects.get(user=request.user)
+    if request.method == 'POST' and profile.user.is_superuser and parkingColumn.totalColumn > 0: 
+        parkingColumn.totalColumn -= 1
+        parkingColumn.save()
     return redirect('home:home')
 
 

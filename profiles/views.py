@@ -1,9 +1,9 @@
-from .models import Profile
 from .forms import EditForm
 from django.template import loader
 from django.http import HttpResponse
 from home.models import Notification
 from django.shortcuts import redirect
+from .models import Profile, CarPlate
 from django.contrib.auth.decorators import login_required
 
 
@@ -26,6 +26,9 @@ def editProfile(request):
             form.save()  
             return redirect('profiles:profile')
     
+    # Get the car plates for the current profile
+    carPlates = CarPlate.objects.filter(profile=profile)
+
     template = loader.get_template('profiles/editProfile.html')
-    context = { 'profile': profile, 'form' :form }
+    context = { 'profile': profile, 'carPlates': carPlates, 'form' : form }
     return HttpResponse(template.render(context, request))

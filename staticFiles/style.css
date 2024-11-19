@@ -20,10 +20,12 @@
 #homeFlexDiv{
     display: flex;
     flex: 1;
-    gap: 10px;
+    gap: 20px;
     width: 95%;
     margin: 10px;
     padding: 10px;
+    align-items: center;
+    justify-content: flex-start;
 }
 
 #homeFlexPlaceholder{
@@ -35,13 +37,20 @@
     display: flex;
     gap: 10px;
     margin: 0px;
-    padding: 10px;
+    padding: 0px;
+    border: none;
     align-items: center;
     justify-content: center;
 }
 
+#homeNoPlateItemPlaceholder{
+    width: fit-content;
+    height: fit-content;
+}
+
 #homeNoPlateItem{
     margin: 0px;
+    width: fit-content;
     height: fit-content;
 }
 
@@ -62,6 +71,30 @@
 #homeParkingRow{
     margin: 0px !important;
     padding: 0px !important;
+}
+
+.hoverWrapper {
+    display: flex;
+    position: relative;
+}
+
+.hoverHidden {
+    display: none;
+    opacity: 0;
+    transition: opacity 0.3s ease-in-out;
+}
+
+.hoverWrapper:hover .homeAvailableLabel { display: none; }
+
+.hoverWrapper:hover .hoverHidden {
+    display: flex;
+    opacity: 1;
+    transition: opacity 0.3s ease-in-out;
+}
+
+.hoverWrapper:not(:hover) .hoverHidden {
+    opacity: 0;
+    transition: opacity 0.3s ease-in-out;
 }
 
 
@@ -172,5 +205,16 @@
     width: 50%;
     margin: 18px 0px 0px 0px;
 }
+
+#profileEditInputDiv{
+    display: flex;
+    width: 100%;
+    height: fit-content;
+    margin: 0px;
+    padding: 0px;
+    justify-content: space-between;
+}
+
+#profileEditInputDiv > div{ width: 48%; }
 
 #profileEditSubmitBtn{  width: fit-content; }

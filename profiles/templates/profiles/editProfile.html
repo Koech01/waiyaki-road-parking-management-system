@@ -19,11 +19,20 @@
         </div>
       </div>
 
-      <div class="field"><label>First Name</label>{{form.firstName}}</div>
-
-      <div class="field"><label>Last Name</label>{{form.lastName}}</div>
+      <div id="profileEditInputDiv">
+        <div class="field"><label>First Name</label>{{form.firstName}}</div>
+        <div class="field"><label>Last Name</label>{{form.lastName}}</div>
+      </div>
 
       <div class="field"><label>Email</label>{{form.email}}</div>
+
+      {% if carPlates %}
+        <div class="field"><label>Car Plates</label>
+          {% for plate in carPlates %}
+            <a class="ui basic label" id="homeNoPlateItem">{{ plate.plateNumber }}</a>
+          {% endfor %}
+        </div>
+      {% endif %}
 
       <div class="field"><label>Car Plates</label>{{form.carPlates}}</div>
 
