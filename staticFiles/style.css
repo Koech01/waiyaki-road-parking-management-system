@@ -61,11 +61,16 @@
     margin: 10px;
     padding: 5px;
     overflow-y: auto;
+    overflow-x: auto;
+    max-width: 94vw;
 }
 
 #homeParkingTable{
     margin: 0px;
+    width: 100%;
     padding: 0px;
+    overflow-y: hidden;
+    overflow-x: hidden;
 }
 
 #homeParkingRow{

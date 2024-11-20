@@ -65,12 +65,12 @@
           <tr> 
             {% for slot in slots %}
               <td>
-                {% if slot.isAvailable == True %}
+                {% if slot.isAvailable == True and slot.user != profile %}
                   <div class="hoverWrapper">
-                    <a href="#" class="ui green basic label homeAvailableLabel" onclick="reserveSlot({{ slot.id }})">Available</a>
-                    <a href="#" class="ui black basic label hoverHidden">Reserve</a>
+                    <a class="ui green basic label homeAvailableLabel">Available</a>
+                    <a href="{% url 'home:reserveParkingGrid' slot.id %}" class="ui black basic label hoverHidden">Reserve</a>
                   </div>
-                {% else %}
+                {% elif slot.isAvailable == True and slot.user == profile %}
                   <div class="hoverWrapper">
                     <a href="#" class="ui green basic label homeAvailableLabel">Reserved</a>
                     <a href="#" class="ui black basic label hoverHidden">Reserved</a>
@@ -107,14 +107,7 @@
       headers: { 'Content-Type': 'application/json',   'X-CSRFToken': '{{ csrf_token }}' },
       body: JSON.stringify({})
     })
-    .then(response => response.json())
-    .then(data => {
-      if (data.success) {
-        alert('Reservation successful!');
-        location.reload();  // Refresh the page to show the updated availability
-      } 
-      else {  alert(data.error || 'Something went wrong.'); }
-    });
+
   }
 
 
@@ -142,9 +135,5 @@
       else { alert('Error decreasing parking columns.'); }
     });
   }
-
-
-
-  $('.autumn.leaf').transition('fade');
 </script>
 {% endblock scripts %}

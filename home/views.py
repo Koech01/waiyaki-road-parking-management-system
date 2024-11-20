@@ -1,10 +1,11 @@
-from django.utils import timezone
 from django.template import loader
+from .forms import ReservationForm
+from django.shortcuts import render
 from django.http import HttpResponse
 from profiles.models import Profile, CarPlate
 from django.shortcuts import get_object_or_404, redirect
 from django.contrib.auth.decorators import login_required
-from .models import ParkingGrid, Reservation, ParkingColumn
+from .models import ParkingGrid, Reservation, ParkingColumn, Notification
 
 
 # Create your views here.
@@ -64,30 +65,41 @@ def decreaseParkingColumns(request):
     return redirect('home:home')
 
 
-@login_required
 def reserveParkingGrid(request, slotId):
+    profile = Profile.objects.get(user=request.user)
+    parkingSlot = get_object_or_404(ParkingGrid, id=slotId, isAvailable=True)
+
+    if request.method == "POST":
+        form = ReservationForm(request.POST)
+        if form.is_valid():
+            reservation = form.save(commit=False)
+            reservation.user = profile
+            reservation.parkingSlot = parkingSlot
+            reservation.save()
+
+            parkingSlot.user = profile
+            parkingSlot.save()
+
+            # Send reservation notification
+            Notification.objects.create(
+                carPlate  = reservation.carPlate,
+                user      = profile,
+                startTime = reservation.startTime,
+                endTime   = reservation.endTime,
+                message   = f"Reservation confirmed for slot {parkingSlot.slotNo}."
+            )
+            return redirect("home:home")
+        else:
+            print(form.errors) 
+    else:
+        form = ReservationForm()
+
+    return render(request, 'home/reservation.html', {'form': form, 'parkingSlot': parkingSlot})
+
+
+@login_required
+def cancelReservation(request, reservationId):
     profile     = Profile.objects.get(user=request.user)
-    parkingGrid = get_object_or_404(ParkingGrid, id=slotId)
-    
-    # Check if the parking grid is available
-    if not parkingGrid.isAvailable:
-        pass
-    
-    if request.method == 'POST':
-        startTime = timezone.now()  # Example, use form data for actual start time
-        endTime   = startTime + timezone.timedelta(hours=1)  # Example, 1 hour reservation
-        
-        Reservation.objects.create(
-            user        = profile,
-            parkingSlot = parkingGrid,
-            startTime   = startTime,
-            endTime     = endTime,
-            isActive    = True
-        )
-        
-        # Mark the ParkingGrid as reserved
-        parkingGrid.isAvailable = False
-        parkingGrid.save()
-        
-        return redirect('home:home')
+    reservation = get_object_or_404(Reservation, id=reservationId, user=profile, isActive=True)
+    reservation.cancel()  # Deactivate the reservation and free the slot
     return redirect('home:home')

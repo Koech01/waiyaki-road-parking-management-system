@@ -37,9 +37,13 @@
             <div class="ui comments">
               <div class="comment">
                 <div class="content">
-                  <a class="author">HK19 XZT</a>
+                  <a class="author">{{notification.carPlate}}</a>
                   <div class="metadata"><div class="date">{{ notification.timestamp | date:"d M H.i" }}</div></div>
                   <div class="text">{{notification.message}}</div>
+                  <div class="content">
+                    <a class="ui basic label">Start Time ~ {{notification.startTime | date:"d M H.i"}}</a>
+                    <a class="ui basic label">End Time ~ {{notification.endTime | date:"d M H.i"}}</a>
+                  </div>
                 </div>
               </div>
             </div>
