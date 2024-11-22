@@ -13,42 +13,11 @@ class ParkingColumn(models.Model):
 
 
 class ParkingGrid(models.Model):
-    user = models.ForeignKey(Profile, on_delete=models.CASCADE, blank=True, null=True)
-    row = models.IntegerField()
-    column = models.IntegerField()
-    slotNo = models.CharField(max_length=10, unique=True)
+    user        = models.ForeignKey(Profile, on_delete=models.CASCADE, blank=True, null=True)
+    row         = models.IntegerField()
+    column      = models.IntegerField()
+    slotNo      = models.CharField(max_length=10, unique=True)
     isAvailable = models.BooleanField(default=True)
-
-    def save(self, *args, **kwargs):
-        # Check for the last parking grid to determine the next row/column
-        lastParkingGrid = ParkingGrid.objects.last()
-
-        if lastParkingGrid:
-            # Use the last row and column to determine the next slot
-            lastRow = lastParkingGrid.row
-            lastColumn = lastParkingGrid.column
-            totalColumns = ParkingColumn.objects.first().totalColumn
-
-            # Move to the next row if the last column has been reached
-            if lastColumn >= totalColumns:
-                self.row = lastRow + 1
-                self.column = 1
-            else:
-                self.row = lastRow
-                self.column = lastColumn + 1
-        else:
-            # For the first parking grid, initialize row and column
-            self.row = 1
-            self.column = 1
-
-        # Generate the unique slot number based on row and column
-        self.slotNo = f"R{self.row}C{self.column}"
-
-        # Ensure row and column are not null before saving
-        if self.row is None or self.column is None:
-            raise ValueError("Row and Column must be set before saving.")
-
-        super().save(*args, **kwargs)
 
 
     def __str__(self):
@@ -61,6 +30,7 @@ class ParkingGrid(models.Model):
 
 class Reservation(models.Model):
     user      = models.ForeignKey(Profile, on_delete=models.CASCADE)
+    slot      = models.ForeignKey(ParkingGrid, on_delete=models.CASCADE, blank=True, null=True)
     carPlate  = models.CharField(max_length=15)
     startTime = models.DateTimeField()
     endTime   = models.DateTimeField()
@@ -77,23 +47,18 @@ class Reservation(models.Model):
         else:
             raise ValidationError("Start time and end time are required.")
 
-    def cancel(self):
-        self.isActive = False
-        self.parkingSlot.isAvailable = True
-        self.parkingSlot.save()
-        self.save()
-
     def __str__(self):
         return f"User: {self.user.user} CarPlate {self.carPlate}, isActive {self.isActive}"
 
 
 class Notification(models.Model):
-    carPlate  = models.CharField(max_length=15)
-    user      = models.ForeignKey(Profile, on_delete=models.CASCADE)
-    message   = models.TextField()
-    startTime = models.DateTimeField()
-    endTime   = models.DateTimeField()
-    timestamp = models.DateTimeField(auto_now_add=True)
+    carPlate    = models.CharField(max_length=15)
+    user        = models.ForeignKey(Profile, on_delete=models.CASCADE)
+    message     = models.TextField()
+    startTime   = models.DateTimeField()
+    endTime     = models.DateTimeField()
+    timestamp   = models.DateTimeField(auto_now_add=True)
+    isCancelled = models.BooleanField(default=False)
 
     def __str__(self):
         return f"User: {self.user.user.username} : {self.message}"

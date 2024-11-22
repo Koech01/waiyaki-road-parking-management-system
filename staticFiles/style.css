@@ -17,6 +17,28 @@
     justify-content: center;
 }
 
+#homeReserveSegmentDiv{
+    display: flex;
+    width: 40%;
+    margin: 0px;
+    flex-direction: column;
+}
+
+#divFlex {  
+    display: flex;
+    gap: 10px;
+    align-items: center;
+    justify-content: flex-start;
+ }
+
+#homeReserveForm{
+    display: flex;
+    width: 100%;
+    margin: 0px;
+    padding: 0px;
+    flex-direction: column;
+}
+
 #homeFlexDiv{
     display: flex;
     flex: 1;
@@ -72,6 +94,8 @@
     overflow-y: hidden;
     overflow-x: hidden;
 }
+
+#homeReservedBtn{ height: fit-content !important; }
 
 #homeParkingRow{
     margin: 0px !important;
@@ -131,7 +155,6 @@
     display: flex;
     flex: 1;
     width: 45vw;
-    /* border: none; */
     padding: 10px;
     flex-direction: column;
     align-items: flex-start;
@@ -154,6 +177,8 @@
     width: 70%;
     margin: 0px;
 }
+
+#profileNotificationStatus{ margin: 0px 0px 0px 5px; }
 
 #profileIconCard{
     display: flex;

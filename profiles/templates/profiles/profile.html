@@ -39,6 +39,11 @@
                 <div class="content">
                   <a class="author">{{notification.carPlate}}</a>
                   <div class="metadata"><div class="date">{{ notification.timestamp | date:"d M H.i" }}</div></div>
+                  {% if notification.isCancelled == False %}
+                    <a class="ui green basic label" id="profileNotificationStatus">Reserved</a>
+                  {% elif notification.isCancelled == True %}
+                    <a class="ui red basic label" id="profileNotificationStatus">Cancelled</a>
+                  {% endif %} 
                   <div class="text">{{notification.message}}</div>
                   <div class="content">
                     <a class="ui basic label">Start Time ~ {{notification.startTime | date:"d M H.i"}}</a>

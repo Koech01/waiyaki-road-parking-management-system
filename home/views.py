@@ -39,10 +39,43 @@ def homeView(request):
 @login_required
 def createParkingGrid(request):
     profile = Profile.objects.get(user=request.user)
+
     if request.method == 'POST' and profile.user.is_superuser:
-        newParkingSlot = ParkingGrid()
-        newParkingSlot.save()
+        lastParkingGrid = ParkingGrid.objects.last()
+        totalColumns    = ParkingColumn.objects.first().totalColumn
+
+        if lastParkingGrid:
+            lastRow = lastParkingGrid.row
+            lastColumn = lastParkingGrid.column
+
+            # Determine the next row and column
+            if lastColumn >= totalColumns:
+                nextRow = lastRow + 1
+                nextColumn = 1
+            else:
+                nextRow = lastRow
+                nextColumn = lastColumn + 1
+        else:
+            # Initialize row and column for the first slot
+            nextRow = 1
+            nextColumn = 1
+
+        # Create the new parking grid with the calculated slot
+        slotNo = f"R{nextRow}C{nextColumn}"
+        ParkingGrid.objects.create(row=nextRow, column=nextColumn, slotNo=slotNo)
     return redirect('home:home')
+
+
+@login_required
+def removeParkingGrid(request):
+    profile = Profile.objects.get(user=request.user)
+
+    if request.method == 'POST' and profile.user.is_superuser:
+        lastParkingGrid = ParkingGrid.objects.last()
+
+        if lastParkingGrid.isAvailable == True:
+            lastParkingGrid.delete()
+        return redirect('home:home')
 
 
 @login_required
@@ -66,24 +99,25 @@ def decreaseParkingColumns(request):
 
 
 def reserveParkingGrid(request, slotId):
-    profile = Profile.objects.get(user=request.user)
+    profile     = Profile.objects.get(user=request.user)
     parkingSlot = get_object_or_404(ParkingGrid, id=slotId, isAvailable=True)
 
     if request.method == "POST":
         form = ReservationForm(request.POST)
         if form.is_valid():
-            reservation = form.save(commit=False)
+            reservation      = form.save(commit=False)
             reservation.user = profile
-            reservation.parkingSlot = parkingSlot
+            reservation.slot = parkingSlot
             reservation.save()
 
-            parkingSlot.user = profile
+            parkingSlot.user        = profile
+            parkingSlot.isAvailable = False
             parkingSlot.save()
 
             # Send reservation notification
             Notification.objects.create(
-                carPlate  = reservation.carPlate,
                 user      = profile,
+                carPlate  = reservation.carPlate,
                 startTime = reservation.startTime,
                 endTime   = reservation.endTime,
                 message   = f"Reservation confirmed for slot {parkingSlot.slotNo}."
@@ -97,9 +131,36 @@ def reserveParkingGrid(request, slotId):
     return render(request, 'home/reservation.html', {'form': form, 'parkingSlot': parkingSlot})
 
 
-@login_required
-def cancelReservation(request, reservationId):
+def reservationDetail(request, slotId):
     profile     = Profile.objects.get(user=request.user)
-    reservation = get_object_or_404(Reservation, id=reservationId, user=profile, isActive=True)
-    reservation.cancel()  # Deactivate the reservation and free the slot
+    parkingSlot = get_object_or_404(ParkingGrid, id=slotId)
+    reservation = Reservation.objects.filter(slot_id=parkingSlot.id, isActive=True).first()
+
+
+    template    = loader.get_template('home/reservationInfo.html')
+    context     = { 
+        "profile"    : profile , 
+        "reservation": reservation
+    }
+    return HttpResponse(template.render(context, request))
+
+
+@login_required
+def cancelReservation(request, slotId):
+    profile     = Profile.objects.get(user=request.user)
+    parkingSlot = get_object_or_404(ParkingGrid, id=slotId)
+    reservation = get_object_or_404(Reservation, slot_id=slotId, user=profile)
+
+    parkingSlot.user        = None
+    parkingSlot.isAvailable = True
+    parkingSlot.save() 
+
+    Notification.objects.create(
+        user        = profile,
+        carPlate    = reservation.carPlate,
+        startTime   = reservation.startTime,
+        endTime     = reservation.endTime,
+        message     = f"Reservation cancelled for slot {parkingSlot.slotNo}.",
+        isCancelled = True
+    )
     return redirect('home:home')

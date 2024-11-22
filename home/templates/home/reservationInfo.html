@@ -1,0 +1,68 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block title %}Waiyaki Rd Parking{% endblock title %}
+{% load widget_tweaks %}
+</head>
+
+{% block content %}
+{% include 'home/navigationBar.html' %}
+<div id="homeMainDiv">
+
+
+  <div class="ui piled segments" id="homeReserveSegmentDiv">
+
+    <div class="ui segment" id="divFlex"> 
+      <div class="ui segment"><h4 class="ui header">Reservation Details</h4></div>
+    </div>
+ 
+    <div class="ui segment" id="divFlex"> 
+      <a class="ui basic label">username</a>
+      <p>{{reservation.user.user.username}}</p>
+    </div>
+   
+    <div class="ui segment" id="divFlex"> 
+      <a class="ui basic label">slot no.</a>
+      <p>{{reservation.slot.slotNo}}</p>
+    </div>
+
+    <div class="ui segment" id="divFlex"> 
+    <a class="ui basic label">car plate</a>
+    <p>{{reservation.carPlate}}</p>
+    </div>
+
+    <div class="ui segment" id="divFlex"> 
+    <a class="ui basic label">start time</a>
+    <p>{{reservation.startTime | date:"d M H.i"}}</p>
+    </div>
+
+    <div class="ui segment" id="divFlex"> 
+    <a class="ui basic label">end time</a>
+    <p>{{reservation.endTime | date:"d M H.i"}}</p>
+    </div>
+  </div>
+
+
+
+
+{% comment %} 
+  <div class="ui segment" id="homeReserveSegmentDiv">
+
+    <h3 class="ui header">Reserve Parking Spot ~ {{ parkingSlot.slotNo }}</h3>
+
+    <form class="ui form" id="homeReserveForm" action="" method="POST">
+      {% csrf_token %}
+
+      <div class="field"><label>Car Plate</label>{{form.carPlate}}</div>
+      <div class="field"><label>Start Time</label>{{form.startTime}}</div>
+      <div class="field"><label>End Time</label>{{form.endTime}}</div>
+
+      <div class="field">
+        <button class="ui primary button" type="submit">Reserve</button>
+        <a href="{% url 'home:home' %}" class="ui secondary button">Cancel</a> 
+      </div>
+    </form>
+
+  </div> {% endcomment %}
+
+</div>
+{% endblock %}

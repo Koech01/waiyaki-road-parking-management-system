@@ -8,15 +8,28 @@
 {% include 'home/navigationBar.html' %}
 <div id="homeMainDiv">
 
-  <h2>Reserve Parking Spot: {{ parkingSlot.slotNo }}</h2>
-  
-  <form class="ui form" action="" method="POST">
-    {% csrf_token %}
+  <div class="ui segment" id="homeReserveSegmentDiv">
 
-    {{ form.as_p }}
+    <h3 class="ui header">Reserve Parking Spot ~ {{ parkingSlot.slotNo }}</h3>
 
-    <button class="ui primary button" type="submit">Reserve</button>
-    <a href="{% url 'home:home' %}" class="ui secondary button">Cancel</a>
-  </form>
+    <form class="ui form" id="homeReserveForm" action="" method="POST">
+      {% csrf_token %}
+
+      <div class="field"><label>Car Plate</label>{{form.carPlate}}</div>
+      <div class="field"><label>Start Time</label>{{form.startTime}}</div>
+      <div class="field"><label>End Time</label>{{form.endTime}}</div>
+
+      {% if form.errors %}
+        <div class="ui error message"><div class="header">Error</div><p>{{ form.errors }}</p></div>
+      {% endif %}
+
+      <div class="field">
+        <button class="ui primary button" type="submit">Reserve</button>
+        <a href="{% url 'home:home' %}" class="ui secondary button">Cancel</a> 
+      </div>
+    </form>
+
+  </div>
+
 </div>
 {% endblock %}

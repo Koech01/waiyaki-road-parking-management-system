@@ -42,7 +42,8 @@
 
     {% if profile.user.is_superuser %}
       <div id="homeNoPlateList">
-        <button class="ui secondary button" onclick="createParkingGrid()">Creating Parking Spot</button>
+        <button class="ui secondary button" onclick="createParkingGrid()">Add Parking Spot</button>
+        <button class="ui red button" onclick="removeParkingGrid()">Remove Parking Spot</button>
         <button class="ui labeled icon button" onclick="addParkingColumns()"><i class="plus icon"></i>Column</button>
         <button class="ui labeled icon button" onclick="decreaseParkingColumns()"><i class="minus icon"></i>Column</button>
       </div>
@@ -65,16 +66,37 @@
           <tr> 
             {% for slot in slots %}
               <td>
-                {% if slot.isAvailable == True and slot.user != profile %}
+                {% if slot.isAvailable == True and slot.user == None %}
                   <div class="hoverWrapper">
                     <a class="ui green basic label homeAvailableLabel">Available</a>
-                    <a href="{% url 'home:reserveParkingGrid' slot.id %}" class="ui black basic label hoverHidden">Reserve</a>
+                    <a 
+                      class = "ui black basic label hoverHidden"
+                      href  = "{% url 'home:reserveParkingGrid' slot.id %}" 
+                    >
+                    Reserve
+                  </a>
                   </div>
-                {% elif slot.isAvailable == True and slot.user == profile %}
+                {% elif slot.isAvailable == False and slot.user != None %}
+                  {% if slot.user.user == profile.user %}
+                    <div class="hoverWrapper">
+                      <a 
+                        class = "ui red basic label"
+                        href  = "{% url 'home:reservationCancel' slot.id %}" 
+                       >
+                       Cancel
+                      </a>
+                    </div>
+                  {% elif slot.user.user != profile.user %}
                   <div class="hoverWrapper">
-                    <a href="#" class="ui green basic label homeAvailableLabel">Reserved</a>
-                    <a href="#" class="ui black basic label hoverHidden">Reserved</a>
+                    <a id="homeReservedBtn" class="ui black basic label homeAvailableLabel"> Reserved</a>
+                    <a 
+                      class = "ui grey basic label hoverHidden"
+                      href  = "{% url 'home:reservationDetail' slot.id %}" 
+                    >
+                      More Info
+                    </a>
                   </div>
+                  {% endif %} 
                 {% endif %}
               </td>
             {% endfor %}
@@ -101,13 +123,16 @@
   }
 
 
-  function reserveSlot(slotId) {
-    fetch(`/reserveParkingGrid/${slotId}/`, {
-      method: 'POST',
-      headers: { 'Content-Type': 'application/json',   'X-CSRFToken': '{{ csrf_token }}' },
-      body: JSON.stringify({})
+  function removeParkingGrid() {
+    fetch('{% url "home:removeParkingGrid" %}', {
+      method : 'POST',
+      headers: { 'Content-Type': 'application/json', 'X-CSRFToken': '{{ csrf_token }}',  },
+      body   : JSON.stringify({  }),
     })
-
+    .then(response => {
+      if   (response.ok) { location.reload(); } 
+      else { alert('Error creating parking grid.'); }
+    });
   }
 
 
@@ -134,6 +159,36 @@
       if   (response.ok) { location.reload(); } 
       else { alert('Error decreasing parking columns.'); }
     });
+  }
+
+
+  function reserveSlot(slotId) {
+    fetch(`/reserveParkingGrid/${slotId}/`, {
+      method  : 'POST',
+      headers : { 'Content-Type': 'application/json',   'X-CSRFToken': '{{ csrf_token }}' },
+      body    : JSON.stringify({})
+    })
+
+  }
+
+
+  function reservationInfo(slotId) {
+    fetch(`/reservationDetail/${slotId}/`, {
+      method  : 'GET',
+      headers : { 'Content-Type': 'application/json',   'X-CSRFToken': '{{ csrf_token }}' },
+      body    : JSON.stringify({})
+    })
+
+  }
+
+
+  function cancelReservation(slotId) {
+    fetch(`/reservationCancel/${slotId}/`, {
+      method  : 'POST',
+      headers : { 'Content-Type': 'application/json',   'X-CSRFToken': '{{ csrf_token }}' },
+      body    : JSON.stringify({})
+    })
+
   }
 </script>
 {% endblock scripts %}
